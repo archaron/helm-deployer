@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.13
 
 # Use latest github helm version if empty
 ARG HELM_VERSION
@@ -15,7 +15,7 @@ ENV PATH $HELM_HOME:$YC_HOME/bin:$PATH
 
 RUN apk --no-cache add \
         curl \
-        python \
+        python3 \
         py-crcmod \
         bash \
         libc6-compat \
