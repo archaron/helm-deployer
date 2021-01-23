@@ -1,4 +1,6 @@
 # Helm-deployer
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/archaron/helm-deployer)
+
 Deploying container for Yandex.Cloud CI/CD integrations.
 
 ## Installs:
