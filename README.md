@@ -6,7 +6,7 @@ Deploying container for Yandex.Cloud CI/CD integrations.
   Tool that controls Kubernetes cluster from the deployment container.
   Uses the latest release if not specified in KUBECTL_VERSION
   
-- ### Yandex.Cloud CLI utility [yc](https://cloud.yandex.ru/docs/cli/quickstart) 
+- ### [yc](https://cloud.yandex.ru/docs/cli/quickstart) &mdash; Yandex.Cloud CLI utility  
   For Yandex.Cloud integrations from the deployment container.
 
 - ### [HELM](https://helm.sh/)
@@ -19,6 +19,7 @@ Deploying container for Yandex.Cloud CI/CD integrations.
 ## Usage example
 
 Some variables must be defined in gitlab CI/CD.
+
 **YC_SA_KEY** - Service Account key for yandex cloud image registry access.
 Create new service account in Yandex.Cloud console with roles:
  - container-registry.images.pusher
