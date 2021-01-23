@@ -68,9 +68,31 @@ sops --pgp <gpg_key_id> secrets.prod.yaml
 ```
 
 
-Deploy part of .gitlab-ci.yml file may look like:
+Don't forget to change yandex registry path.
+Examlpe .gitlab-ci.yml file may look like:
 
 ```yaml
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+  YC_REGISTRY: cr.yandex/<registry_id>
+  RELEASE_NAME: "myapp"  
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:19.03.12-dind
+  variables:
+    IMAGE_NAME: ${YC_REGISTRY}/${RELEASE_NAME}:${CI_COMMIT_SHORT_SHA}
+  before_script:
+    - cat "$YC_SA_KEY" | docker login -u json_key --password-stdin $YC_REGISTRY
+  script:
+    - docker build -t ${IMAGE_NAME} ./
+    - docker push ${IMAGE_NAME}
 .deploy_template:
   stage: deploy
   image: archaron/helm-deployer:latest
@@ -107,7 +129,6 @@ deploy_dev:
     # Target namespace
     KUBE_NAMESPACE: "dev"
     BUILD_VARIANT: "dev"
-    RELEASE_NAME: "myapp"
   environment:
     name: dev
   when: manual
@@ -118,7 +139,6 @@ deploy_prod:
     KUBE_CLUSTER: "kub-test"
     KUBE_NAMESPACE: "prod"
     BUILD_VARIANT: "prod"
-    RELEASE_NAME: "myapp"
   environment:
     name: prod
   only:
