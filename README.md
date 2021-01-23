@@ -64,7 +64,7 @@ gpg --armor --export-secret-keys <gpg_key_id>
 
 Later, you can provide this key identifier to sops for secrets encryption:
 ```bash
-sops --pgp <gpg_key_id> secrets.prod.yaml
+sops --encrypt --pgp <gpg_key_id> secrets.prod.yaml
 ```
 
 
