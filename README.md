@@ -105,7 +105,10 @@ build:
     # Get access credentials for kubectl from yandex cloud provider
     - yc managed-kubernetes cluster get-credentials ${KUBE_CLUSTER} --external
     # Setup GPG for helm secrets
-    - echo "$HELM_GPG_KEY" > .helm_secrets_gpg_key.key
+    - gpg --import $HELM_GPG_KEY
+    # Or if you used a passphrase-protected key
+    #- echo "${PASSPHRASE}" | gpg --pinentry-mode loopback --passphrase-fd 0 --import $HELM_GPG_KEY
+    
     # Deploy chart, stored in .infra folder via helm
     # Values of chart are stored in files named value.<build_variant>.yaml
     # Secret values, encoded with sosp are stored in files named secrets.<build_variant>.yaml
